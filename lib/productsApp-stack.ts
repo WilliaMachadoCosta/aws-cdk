@@ -26,6 +26,10 @@ export class ProductsAppStack extends cdk.Stack {
             writeCapacity: 1
         })
 
+        //products layer
+        const productsLayerArn = ssm.StringParameter.valueForStringParameter(this, "ProductsLayerVersionArn");
+        const productsLayer = lambda.LayerVersion.fromLayerVersionArn(this, "ProductsLayerVersionArn", productsLayerArn)
+
         this.productsFetchHandler = new lambdaNodeJS.NodejsFunction(this,
             "ProductsFetchFunctions", {
             functionName: 'ProductsFetchFunctions',
@@ -40,7 +44,8 @@ export class ProductsAppStack extends cdk.Stack {
             },
             environment: {
                 PRODUCTS_DBD: this.productsDdb.tableName
-            }
+            },
+            layers: [productsLayer]
         });
 
         this.productsAdminHandler = new lambdaNodeJS.NodejsFunction(this,
@@ -57,7 +62,8 @@ export class ProductsAppStack extends cdk.Stack {
             },
             environment: {
                 PRODUCTS_DBD: this.productsDdb.tableName
-            }
+            },
+            layers: [productsLayer]
         });
 
         this.productsDdb.grantReadData(this.productsFetchHandler)
