@@ -1,0 +1,7 @@
+{
+    "editor.formatOnSave": false,
+    "javascript.memoryLimit": 8192,
+    "editor.folding": false,
+    "typescript.tsserver.maxTsServerIdleTime": 600000
+
+}
