@@ -14,7 +14,7 @@ export async function handler(event: APIGatewayEvent, context: Context): Promise
     return {
       statusCode: 200,
       body: JSON.stringify({
-        message: "GET Products -ok"
+        message: "POST Products -ok"
       })
     }
   } else if (event.resource === "/products/{id}") {
@@ -25,14 +25,14 @@ export async function handler(event: APIGatewayEvent, context: Context): Promise
       console.log(`PUT /products/${productId}`)
       return {
         statusCode: 200,
-        body: "PUT /products / {id}"
+        body: `PUT /products/${productId}`
       }
 
     } else if (event.httpMethod === "DELETE") {
       console.log(`DELETE /products/${productId}`)
       return {
         statusCode: 200,
-        body: "DELETE /products / {id}"
+        body: `DELETE /products/${productId}`
       }
     }
 
